@@ -56,9 +56,9 @@ cp .env.example .env
 Required values:
 ```env
 # From your amplifier-app-api
-AMPLIFIER_API_URL=https://amplifier-api.gentlebay-e0c2022c.eastus.azurecontainerapps.io
+AMPLIFIER_API_URL=https://your-amplifier-api.azurecontainerapps.io
 AMPLIFIER_API_KEY=app_your_api_key_here
-AMPLIFIER_BASE_CONFIG_ID=your-config-id
+AMPLIFIER_BASE_CONFIG_ID=your-config-id-here
 AMPLIFIER_BASE_CONFIG_NAME=chat-bundle
 
 # From Azure Bot registration (step 1)

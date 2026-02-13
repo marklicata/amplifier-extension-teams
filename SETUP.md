@@ -88,9 +88,9 @@ Open `.env` and fill in these values:
 
 ```env
 # From your amplifier-app-api (you already have these)
-AMPLIFIER_API_URL=https://amplifier-api.gentlebay-e0c2022c.eastus.azurecontainerapps.io
-AMPLIFIER_API_KEY=app_OdblJ9aIEVblgwd40W_4NjNypLHRaFj7OZ4kCCYXdl8
-AMPLIFIER_BASE_CONFIG_ID=eca3c4c5-0852-46e8-b52c-7aecc847db28
+AMPLIFIER_API_URL=https://your-amplifier-api.azurecontainerapps.io
+AMPLIFIER_API_KEY=app_your_api_key_here
+AMPLIFIER_BASE_CONFIG_ID=your-config-id-here
 AMPLIFIER_BASE_CONFIG_NAME=chat-bundle
 
 # From Azure Bot registration (Step 1)
@@ -145,7 +145,7 @@ python run.py
 You should see:
 ```
 Starting Amplifier Teams Bot...
-Amplifier API: https://amplifier-api.gentlebay-e0c2022c.eastus.azurecontainerapps.io
+Amplifier API: https://your-amplifier-api.azurecontainerapps.io
 Bot Service URL: http://localhost:3978
 INFO:     Uvicorn running on http://0.0.0.0:3978
 ```

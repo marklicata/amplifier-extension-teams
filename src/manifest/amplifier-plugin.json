@@ -6,14 +6,14 @@
   "description_for_model": "Amplifier provides AI development assistance through specialized agents, code analysis, and automated workflows. Create sessions to have multi-turn conversations, send messages to get responses, and access the full Amplifier ecosystem including foundation agents, recipes, and tools.",
   "api": {
     "type": "openapi",
-    "url": "https://amplifier-api.gentlebay-e0c2022c.eastus.azurecontainerapps.io/openapi.json",
+    "url": "https://your-amplifier-api.azurecontainerapps.io/openapi.json",
     "has_user_authentication": false
   },
   "auth": {
     "type": "service_http",
     "authorization_type": "custom",
     "custom_auth_header": "X-API-Key",
-    "token": "app_OdblJ9aIEVblgwd40W_4NjNypLHRaFj7OZ4kCCYXdl8"
+    "token": "YOUR_API_KEY_HERE"
   },
   "logo_url": "https://github.com/microsoft/amplifier/raw/main/docs/assets/logo.png",
   "contact_email": "support@example.com",
