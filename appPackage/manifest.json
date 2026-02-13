@@ -1,0 +1,63 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.18/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.18",
+  "version": "1.0.0",
+  "id": "{{TEAMS_APP_ID}}",
+  "developer": {
+    "name": "Amplifier Team",
+    "websiteUrl": "https://github.com/microsoft/amplifier",
+    "privacyUrl": "https://github.com/microsoft/amplifier/blob/main/PRIVACY.md",
+    "termsOfUseUrl": "https://github.com/microsoft/amplifier/blob/main/TERMS.md"
+  },
+  "name": {
+    "short": "Amplifier",
+    "full": "Amplifier AI Development Assistant"
+  },
+  "description": {
+    "short": "AI-powered development assistant",
+    "full": "Amplifier is your AI development assistant. Chat directly with Amplifier for coding help, architecture advice, debugging support, and best practices. Each conversation maintains context through Amplifier's session system."
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "accentColor": "#0078D4",
+  "bots": [
+    {
+      "botId": "{{MICROSOFT_APP_ID}}",
+      "scopes": [
+        "personal",
+        "team",
+        "groupChat"
+      ],
+      "supportsFiles": false,
+      "isNotificationOnly": false,
+      "supportsCalling": false,
+      "supportsVideo": false,
+      "commandLists": [
+        {
+          "scopes": [
+            "personal",
+            "team",
+            "groupChat"
+          ],
+          "commands": [
+            {
+              "title": "Help",
+              "description": "Get help using Amplifier"
+            },
+            {
+              "title": "New Session",
+              "description": "Start a fresh conversation"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "permissions": [
+    "identity",
+    "messageTeamMembers"
+  ],
+  "validDomains": []
+}
