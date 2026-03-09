@@ -1,0 +1,53 @@
+name: Deploy Teams Bot
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: marklicata/amplifier-extension-teams
+          
+      - name: Azure Login (Federated)
+        uses: azure/login@v2
+        with:
+          client-id: 80ca20e7-15b3-4ee2-815a-6c77e88812f8
+          tenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+          subscription-id: 8a673afb-d858-4a97-a490-2625396d1484
+      
+      - name: Deploy to Container Apps
+        run: |
+          az containerapp up \
+            --name amplifier-teams-bot \
+            --resource-group amplifier-rg \
+            --location eastus \
+            --source . \
+            --ingress external \
+            --target-port 3978 \
+            --env-vars \
+              AMPLIFIER_API_URL=https://amplifier-api.gentlebay-e0c2022c.eastus.azurecontainerapps.io \
+              AMPLIFIER_API_KEY=app_nxFEiEbOAWK7EhRCG6hiYnm8n-7Zi7-2LIlL-VjMe3c \
+              AMPLIFIER_BASE_CONFIG_ID=eca3c4c5-0852-46e8-b52c-7aecc847db28 \
+              AMPLIFIER_BASE_CONFIG_NAME=chat-bundle \
+              MICROSOFT_APP_ID=80ca20e7-15b3-4ee2-815a-6c77e88812f8 \
+              MICROSOFT_APP_TYPE=MultiTenant \
+              PORT=3978
+      
+      - name: Get Bot URL
+        run: |
+          URL=$(az containerapp show \
+            --name amplifier-teams-bot \
+            --resource-group amplifier-rg \
+            --query properties.configuration.ingress.fqdn -o tsv)
+          echo "✅ Bot deployed: https://$URL"
+          echo "📝 Endpoint: https://$URL/api/messages"
