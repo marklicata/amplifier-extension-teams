@@ -1,7 +1,7 @@
 [project]
 name = "amplifier-teams-bot"
 version = "0.1.0"
-description = "Teams Bot for Amplifier - Direct chat integration with amplifier-app-api"
+description = "Teams Bot for Amplifier - Works with Managed Identity"
 requires-python = ">=3.11"
 dependencies = [
     "fastapi>=0.110.0",
@@ -10,6 +10,7 @@ dependencies = [
     "pydantic>=2.6.0",
     "pydantic-settings>=2.2.0",
     "python-dotenv>=1.0.0",
+    "azure-identity>=1.19.0",
 ]
 
 [project.optional-dependencies]

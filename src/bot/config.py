@@ -1,5 +1,6 @@
 """Configuration management for the Amplifier Teams Bot."""
 
+from pathlib import Path
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -17,11 +18,9 @@ class Settings(BaseSettings):
         default="chat-bundle", description="Name of the base config"
     )
 
-    # Teams Bot credentials
+    # Teams Bot credentials (uses managed identity for auth)
     microsoft_app_id: str = Field(..., description="Microsoft App ID from Azure Bot registration")
-    microsoft_app_password: str = Field(
-        ..., description="Microsoft App Password from Azure Bot registration"
-    )
+    
     microsoft_app_type: str = Field(default="MultiTenant", description="Bot app type")
     microsoft_app_tenant_id: str | None = Field(
         default=None, description="Tenant ID for SingleTenant bots"

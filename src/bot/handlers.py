@@ -1,9 +1,14 @@
 """Message handlers for processing Teams activities."""
 
+import logging
+import traceback
+
 from .amplifier_client import amplifier_client
 from .bot_adapter import bot_adapter
 from .models import TeamsActivity
 from .session_manager import session_manager
+
+logger = logging.getLogger(__name__)
 
 
 async def handle_message(activity: TeamsActivity) -> None:
@@ -44,7 +49,9 @@ async def handle_message(activity: TeamsActivity) -> None:
                 amplifier_session_id=amplifier_session_id,
                 user_id=user_id,
             )
-            print(f"Created new session: {amplifier_session_id} for conversation {conversation_id}")
+            logger.info(
+                f"Created new session: {amplifier_session_id} for conversation {conversation_id}"
+            )
         else:
             # Update activity timestamp
             session_manager.update_activity(conversation_id)
@@ -63,17 +70,34 @@ async def handle_message(activity: TeamsActivity) -> None:
         )
 
     except Exception as e:
-        print(f"Error processing message: {e}")
-        # Send error message to user
+        logger.error(
+            "Failed to process message",
+            exc_info=True,
+            extra={
+                "conversation_id": conversation_id,
+                "user_id": user_id,
+                "message_preview": text[:50],
+                "error_type": type(e).__name__,
+            },
+        )
+
+        # Send user-friendly error with error ID
+        error_id = conversation_id[-8:]  # Last 8 chars as error ID
         error_message = (
-            "I encountered an error processing your message. Please try again later."
+            f"I encountered an error processing your message.\n\n"
+            f"Error ID: `{error_id}` (share with support if issue persists)\n\n"
+            f"Error: {type(e).__name__}"
         )
-        await bot_adapter.send_activity(
-            service_url=service_url,
-            conversation_id=conversation_id,
-            text=error_message,
-            reply_to_id=activity.id,
-        )
+
+        try:
+            await bot_adapter.send_activity(
+                service_url=service_url,
+                conversation_id=conversation_id,
+                text=error_message,
+                reply_to_id=activity.id,
+            )
+        except Exception as send_error:
+            logger.critical("Failed to send error message to user", exc_info=True)
 
 
 async def handle_conversation_update(activity: TeamsActivity) -> None:
@@ -104,7 +128,7 @@ Just send me a message to get started!"""
                 service_url=service_url, conversation_id=conversation_id, text=welcome_message
             )
         except Exception as e:
-            print(f"Error sending welcome message: {e}")
+            logger.error(f"Error sending welcome message: {e}")
 
 
 async def handle_invoke(activity: TeamsActivity) -> dict:
